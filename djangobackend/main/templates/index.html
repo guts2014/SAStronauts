@@ -59,7 +59,7 @@
     }
     //In this script tag we will handle all input, like hitting enter on search box and clicking map icons.
 
-        function SearchKeyPress(e){
+        function searchKeyPress(e){
             if(e.keyCode == 13){ //if enter is pressed
                 var pageaddress = "/api/query/?q=" + $("#searchbox").innerHTML.toString().replace(" ", "+");
                 console.log("requesting:", pageaddress)
