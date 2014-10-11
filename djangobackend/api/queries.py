@@ -1,7 +1,6 @@
 #This contains the functions for searching the elastic search database
-
-from elasticsearch import Elasticsearch
-es = Elasticsearch()
+import elasticsearch
+es = elasticsearch.Elasticsearch()
 
 
 def getwhitespacecase(fields=["_all"],querystring=""):
