@@ -1,4 +1,4 @@
-import Dictionary
+import Dictionary as test2
 from datetime import datetime
 from elasticsearch import Elasticsearch
 es = Elasticsearch()
