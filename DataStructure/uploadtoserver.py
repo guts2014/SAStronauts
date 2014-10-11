@@ -103,6 +103,7 @@ def main():
     countingindex = 0
     for idx in test2.data:
         print("IDX = "+idx+"\tProcess Number: "+str(countingindex)+"\n")
+        countingindex += 1
         es.index(index="terrorist", doc_type="data", id = idx, body = getdata(date_year = test2.data[idx]["date"]["year"],
                                                                               date_month = test2.data[idx]["date"]["month"],
                                                                               date_day = test2.data[idx]["date"]["day"],
