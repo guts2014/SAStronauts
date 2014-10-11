@@ -51,15 +51,16 @@
     </script>
 
     <script>
-    //A bunch of helper functions
+        //A bunch of helper functions
 
-    //All callback functions for get requests
-    function SearchGetCallback(data){
-        alert("data was: "+data);         
-    }
+        //All callback functions for get requests
+        function SearchGetCallback(data){
+            alert("data was: "+data);         
+        }
     //In this script tag we will handle all input, like hitting enter on search box and clicking map icons.
 
         function searchKeyPress(e){
+            console.log("HELLO");
             if(e.keyCode == 13){ //if enter is pressed
                 var pageaddress = "/api/query/?q=" + $("#searchbox").innerHTML.toString().replace(" ", "+");
                 console.log("requesting:", pageaddress)
