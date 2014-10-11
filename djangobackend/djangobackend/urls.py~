@@ -5,6 +5,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'djangobackend.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    (r'^', include('main.urls')),
+    (r'^api/', include('api.urls')),
+    (r'^$', include('main.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
