@@ -1,5 +1,6 @@
 #from django.shortcuts import render
 from django.http import HttpResponse
+import queries, json
 
 #This is a test view that returns the request to the server
 def api_test(request):
@@ -12,7 +13,8 @@ def api_call(request):
 #this is a placeholder for the query view. the query view will return a bunch of json objects for all of the search results.
 def api_query(request):
     q = request.GET.get('q', '')
-    return HttpResponse("<h1>Your query was:</h1>" + q)
+    queryresults = queries.query(searchstring = q)
+    return HttpResponse(json.dumps(queryresults))
 
 #this is a placeholder view for the context api call. This will return a json object with lots of good contextual data about the item requested.
 def api_context(request):
