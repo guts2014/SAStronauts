@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('main.views',
-    (r'^$', 'test_page'),
+    (r'^$', 'index_page'),
 )
