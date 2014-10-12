@@ -176,10 +176,11 @@
 
         
         function infoRequestCallback(data){
+                console.log("data")
                 //parsing the json string in to a list of json objects
                 data = jQuery.parseJSON(data);
-                console.log("data")
-                console.log(data)
+                console.log("data");
+                console.log(data);
 
                 for(var i = 0; i<data.length; i++){
                     //getting the ID for the marker so we can update the otherdata field the marker has
