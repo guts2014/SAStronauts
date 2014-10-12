@@ -51,7 +51,7 @@ def getCount(keywords):
         if works == 1:
             json_obj2 = urllib2.urlopen("http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&pageids=" + pageid)
             data2 = json.load(json_obj2)
-            data3 = data2['query']['pages'][pageid]['revisions'][0]['*'].encode('ascii')
+            data3 = data2['query']['pages'][pageid]['revisions'][0]['*'].encode('utf-8')
             dd = count(data3, title, keywords)
             total_data.append(dd)
 
@@ -61,7 +61,7 @@ def structureData(data):
     data_final = {}
     for d in data:
         link = 'http://en.wikipedia.org/wiki/' + buildTitle(d[0])
-        data_final[link.encode('ascii')] = d[1]
+        data_final[link.encode('utf-8')] = d[1]
     return data_final
 
 
