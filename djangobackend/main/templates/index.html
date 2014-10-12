@@ -62,6 +62,10 @@
     </div>
     <div id='contents'></div>
     <script>
+        function markerClickCallback(marker){
+            alert(marker.id);
+        }
+
         //some super-useful helper functions
         function addmarker(id, lat, long, otherdata, colour){
             //adjusting the icon's colours
@@ -72,6 +76,8 @@
                 new google.maps.Point(10, 34));
 
             var m = new google.maps.Marker({position: new google.maps.LatLng(lat, long), icon: pinImage});
+            //the event listeners for clicking map items
+            google.maps.event.addListener(m, "click", markerClickCallback);
             m.id = id; //this is a total hax because javascript is interpreted, but it works.
             m.otherdata = otherdata;
             m.selected = false; //this determines whether the marker is the currently selected one we are displaying information about.
@@ -233,10 +239,6 @@
 
             });
 
-            //the event listeners for clicking map items
-            google.maps.event.addListener(map, "click", function(){
-                alert("hello!");
-            });
         });
 </script>
   </body>
