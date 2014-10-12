@@ -47,7 +47,7 @@ def api_context(request):
     idno = request.GET.get('id', '')
     
     info = api_info2(idno)
-    setupSearch(info)
+    wikiapi.setupSearch(info)
     
     
 
