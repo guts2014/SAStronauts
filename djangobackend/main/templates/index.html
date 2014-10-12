@@ -79,9 +79,9 @@
             m.setTitle(id);
 
             //the event listeners for clicking map items
-            google.maps.event.addListener(m, "click", (function(m){
+            google.maps.event.addListener(m, "click", (function(ma){
                 return function(){
-                            console.log(m.getTitle());
+                            console.log(ma.getTitle());
                         }
             })(m));
             m.id = id; //this is a total hax because javascript is interpreted, but it works.
