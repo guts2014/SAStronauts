@@ -54,13 +54,13 @@
     </script>
   </head>
   <body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <div id="map_canvas"></div>
     <div id="searchdiv">
         <input type="text" value="test" placeholder="Search" id="search-query"></input>
         <button type="button" id="search-button">Go</button>
     </div>
     <div id='contents'></div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script>
         //some super-useful helper functions
         function addmarker(id, lat, long, otherdata){
@@ -73,6 +73,27 @@
         //All callback functions for get requests
         function SearchGetCallback(data){
             alert("data was: "+data);         
+        }
+
+        function infoRequestCallback(data){
+                    
+        }
+        
+        function constructJsonForInfoRequest(idslist, fieldslist){
+            var j = {'ids':idslist, 'fields':fieldslist};
+            console.log(j);
+            return j;
+        }
+
+        function requestInfo(ids, fields){
+            $.ajax({
+              type: "POST",
+              url: 'api/info/',
+              data: JSON.stringify(constructJsonForInfoRequest(ids, fields)),
+              success: infoRequestCallback,
+              dataType: "application/json"
+            });
+            
         }
 
         function makeSearchGetRequest(){

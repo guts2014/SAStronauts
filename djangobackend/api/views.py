@@ -13,8 +13,21 @@ def api_call(request):
 #this is a placeholder for the query view. the query view will return a bunch of json objects for all of the search results.
 def api_query(request):
     q = request.GET.get('q', '')
-    queryresults = queries.query(searchstring = q)
+    n = request.GET.get('n', 20)
+    n = int(n)
+    queryresults = queries.query(searchstring = q, maxresults=n)
     return HttpResponse(json.dumps(queryresults))
+
+def api_info(request):
+    data = json.loads(request.body)
+
+    infodictionaries = {} #the list of json objects
+    
+    #iterating over the ids and getting the requested data on each
+    for ids in data['ids']:
+        infodictionaries[ids] = append(queries.info(id_num=ids, datalist=data['fields']))
+    return HttpResponse(infodictionaries.dumps())#, content_type="application/json")
+    
 
 #this is a placeholder view for the context api call. This will return a json object with lots of good contextual data about the item requested.
 def api_context(request):

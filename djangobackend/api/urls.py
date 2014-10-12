@@ -5,5 +5,6 @@ urlpatterns = patterns('api.views',
     (r'^test/', 'api_test'),
     (r'^query/$', 'api_query'),
     (r'^context/', 'api_context'),
+    (r'^info/', 'api_info'),
     (r'^$', 'api_call'),
 )
