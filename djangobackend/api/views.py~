@@ -30,20 +30,23 @@ def api_info(request):
     return HttpResponse(infodictionaries.dumps())#, content_type="application/json")
 
 def api_info2(idnumber):
-    keywords={}
-    items = ['city','country','region','year','month','group_name']
+    keywords=[]
+    items = [u'city',u'country',u'region',u'year',u'month',u'group_name']
     query = queries.info(id_num=idnumber, datalist=['_all'])
 
     for kw in query:
         
+        
         if kw.encode('utf-8') in items:
+            keywords.append(query[kw])
+        '''
             return ['sdaedwdedaddeewrwerwedwedewdewwrewr>>>>>>>>>>>']
             if kw.encode('utf-8')=='group_name':
                 if kw.encode('utf-8')[0]!='Unknown':
                     keywords[kw.encode('utf-8')]=query[kw.encode('utf-8')][0]
             else:
                 keywords[kw.encode('utf-8')] = query[kw.encode('utf-8')]
-                
+        '''        
     return keywords
 
 #this is a placeholder view for the context api call. This will return a json object with lots of good contextual data about the item requested.
