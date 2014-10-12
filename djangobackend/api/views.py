@@ -34,22 +34,11 @@ def api_info2(idnumber):
     items = ['city','country','region','year','month','group_name']
     query = queries.info(id_num=idnumber, datalist=items)
     
-    '''
-    for kw in query.keys():
-        print 
+    query["group_name"] = query["group_name"][0]
+
+    
         
-        if kw in items:
-            keywords.append(query[kw])
-        else:
-            print kw, "not in", items, "apparently"
-        
-            
-            if kw.encode('utf-8')=='group_name':
-                if kw.encode('utf-8')[0]!='Unknown':
-                    keywords[kw.encode('utf-8')]=query[kw.encode('utf-8')][0]
-            else:
-                keywords[kw.encode('utf-8')] = query[kw.encode('utf-8')]
-        '''        
+                
     return query
 
 #this is a placeholder view for the context api call. This will return a json object with lots of good contextual data about the item requested.
@@ -58,7 +47,7 @@ def api_context(request):
     idno = request.GET.get('id', '')
     
     info = api_info2(idno)
-    print info
+    setupSearch(info)
     
     
 

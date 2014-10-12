@@ -32,8 +32,8 @@ def api_info(request):
 def api_info2(idnumber):
     keywords=[]
     items = ['city','country','region','year','month','group_name']
-    query = queries.info(id_num=idnumber, datalist=['_all'])
-    print query
+    query = queries.info(id_num=idnumber, datalist=items)
+    
     '''
     for kw in query.keys():
         print 
@@ -50,7 +50,7 @@ def api_info2(idnumber):
             else:
                 keywords[kw.encode('utf-8')] = query[kw.encode('utf-8')]
         '''        
-    return keywords
+    return query
 
 #this is a placeholder view for the context api call. This will return a json object with lots of good contextual data about the item requested.
 def api_context(request):
@@ -58,7 +58,7 @@ def api_context(request):
     idno = request.GET.get('id', '')
     
     info = api_info2(idno)
-    print info
+    setupSearch(info)
     
     
 
