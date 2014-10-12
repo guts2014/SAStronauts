@@ -102,8 +102,9 @@
             function getColour(rel){
                 var reldiff = maxrel - minrel;
                 var thiscorrectedrel = rel-minrel;
+                console.log("reldiff:"+reldiff+"   corrected: "+thiscorrectedrel);
 
-                var division = (thiscorrectedrel/reldiff);
+                var division = ((100*thiscorrectedrel)/(100*reldiff));
                 console.log("div:"+division);
                 var r = 255 * division;
                 var g = 255 - r
