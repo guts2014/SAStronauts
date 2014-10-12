@@ -63,10 +63,11 @@
     <div id='contents'></div>
     <script>
         //some super-useful helper functions
-        function addmarker(id, lat, long, otherdata){
+        function addmarker(id, lat, long, otherdata, colour){
             var m = new google.maps.Marker({position: new google.maps.LatLng(lat, long)});
             m.id = id; //this is a total hax because javascript is interpreted, but it works.
             m.otherdata = otherdata;
+            m.selected = false; //this determines whether the marker is the currently selected one we are displaying information about.
 
             currentmarkers.push(m);
             m.setMap(map);
@@ -74,24 +75,73 @@
 
         //takes a list of json objects and adds map markers for each one of them
         function addMarkersFromData(data){
+            function getColour(maxrel, minrel, thisrel){
+                
+            }
+
+            //finding the highest and lowest relevances in the markers so we know which colour to make the markers
+            var maxrel = 0;
+            var minrel = 1;            
+            for(var n in data){
+                var rel = Number(data[n]['_score']);
+                if(rel<minrel){
+                    minrel = rel;
+                }
+                if(rel>maxrel){
+                    maxrel = rel;                
+                }
+            }
+
+            function getColour(thisrel){
+                
+            }
             
             for(var n in data){ //m is a json object with the data about the marker
                 m = data[n];
-                console.log("m has id:"+m['_id']);
                 addmarker(m['_id'], Number(m['coordinates']['latitude']), Number(m['coordinates']['longitude']), m);            
             }
+        }
+
+        //removes all of the old markers from the map
+        function removeOldMarkers(){
+            console.log("currentmarkers: " + currentmarkers);
+            for(var i = 0; i < currentmarkers.length; i++){
+                 currentmarkers[i].setMap(null);           
+            }
+            currentmarkers = [];
         }
 
         //All callback functions for get requests
         function SearchGetCallback(data){
             data = jQuery.parseJSON(data)
             console.log("The data is:\n"+data);
-            addMarkersFromData(data);      
+
+            //filtering out results with no coordinates
+            var newdata = [];
+            for(var i = 0; i<data.length; i++){
+                if(data[i]['coordinates']['latitude']!=""){ //if the latitude coordinate is not empty, add it to the new data
+                    newdata.push(data[i]);
+                }            
+            }
+            addMarkersFromData(newdata);      
         }
 
         
         function infoRequestCallback(data){
-                
+                data = jQuery.parseJSON(data);
+                //getting the ID for the marker so we can update the otherdata field the marker has
+                var id = data['_id'];
+                //finding the marker the info was for in the database and updating 
+                for(var i = 0; i<currentmarkers.length; i++){
+                    if (currentmarkers[i]['_id'] == id){
+                        currentmarker[i].otherdata = data;
+                        
+                        //checking if the current marker is selected. if it is, calling the function to display its data in a pane
+                        if(currentmarkers[i].selected){
+                            openDisplayPane(currentmarkers[i]['_id']);                        
+                        }
+                    }
+                }
         }
         
         function constructJsonForInfoRequest(idslist, fieldslist){
@@ -122,14 +172,7 @@
             );      
         }
 
-        //removes all of the old markers from the map
-        function removeOldMarkers(){
-            console.log("currentmarkers: " + currentmarkers);
-            for(var i = 0; i < currentmarkers.length; i++){
-                 currentmarkers[i].setMap(null);           
-            }
-            currentmarkers = [];
-        }
+
         
         function searchfunction(){
             var querystring = $("#search-query").val();
