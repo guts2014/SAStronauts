@@ -35,10 +35,12 @@ def api_info2(idnumber):
     query = queries.info(id_num=idnumber, datalist=['_all'])
 
     for kw in query:
-        
+        print 
         
         if kw in items:
             keywords.append(query[kw])
+        else:
+            print kw, "not in", items, "apparently"
         '''
             
             if kw.encode('utf-8')=='group_name':
