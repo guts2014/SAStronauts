@@ -71,6 +71,15 @@
         }
 
         //some super-useful helper functions
+        function getmarkerbyid(id){
+            for(var i = 0; i < currentmarkers.length; i++){
+                if(currentmarkers[i].id == id){
+                    return currentmarkers[i];                
+                }
+            }
+            return null;
+        }
+
         function addmarker(id, lat, long, otherdata, colour){
             //adjusting the icon's colours
             var pinColor = colour; //"0a75FF";
