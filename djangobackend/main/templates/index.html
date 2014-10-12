@@ -110,7 +110,7 @@
             
             for(var n in data){ //m is a json object with the data about the marker
                 m = data[n];
-                var colour = scale.getColor(m['_scale']);
+                var colour = getColour(Number(m['_scale']));
                 console.log("colour should be:"+colour);
                 addmarker(m['_id'], Number(m['coordinates']['latitude']), Number(m['coordinates']['longitude']), m, colour);            
             }
