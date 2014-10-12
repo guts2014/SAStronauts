@@ -208,7 +208,7 @@
             $.ajax({
               type: "POST",
               url: 'api/info/',
-              data: JSON.stringify(constructJsonForInfoRequest(ids, fields)),
+              data: JSON.stringify({'ids':ids, 'fields':fields}),
               success: infoRequestCallback,
               dataType: "application/json"
             });
@@ -218,7 +218,6 @@
         //All callback functions for get requests
         function SearchGetCallback(data){
             data = jQuery.parseJSON(data)
-            console.log("The data is:\n"+data);
 
             //filtering out results with no coordinates
             var newdata = [];
