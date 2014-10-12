@@ -68,6 +68,8 @@
             m.id = id; //this is a total hax because javascript is interpreted, but it works.
             m.otherdata = otherdata;
 
+            currentmarkers = currentmarkers + [m];
+            console.log("new current markers:"+currentmarkers);
             m.setMap(map);
         }
 
@@ -82,7 +84,6 @@
         //All callback functions for get requests
         function SearchGetCallback(data){
             data = jQuery.parseJSON(data)
-            console.log(JSON.stringify(data))
             addMarkersFromData(data);      
         }
 
