@@ -29,6 +29,7 @@
         //setting up the google map
         var map;
         var currentmarkers = [];
+        var selectedmarker = "";
         
         function initialize() {
             var mapCanvas = document.getElementById('map_canvas');
@@ -64,6 +65,9 @@
     <script>
         function markerClickCallback(id){
             console.log("id: "+id);
+            selectedmarker = id;
+            
+            requestInfo([id,], ["id", "country", "location"]);
         }
 
         //some super-useful helper functions
@@ -82,7 +86,7 @@
             google.maps.event.addListener(m, "click", (function(ma){
                 return function(){
                             console.log("clicked item:"+ma.getTitle());
-                            
+                            markerClickCallback(ma.getTitle());
                         }
             })(m));
             m.id = id; //this is a total hax because javascript is interpreted, but it works.
@@ -156,19 +160,31 @@
             currentmarkers = [];
         }
 
+
+        function openDisplayPane(id){
+            alert("Display pane! "+id);
+        }
+
         
         function infoRequestCallback(data){
+                //parsing the json string in to a list of json objects
                 data = jQuery.parseJSON(data);
-                //getting the ID for the marker so we can update the otherdata field the marker has
-                var id = data['_id'];
-                //finding the marker the info was for in the database and updating 
-                for(var i = 0; i<currentmarkers.length; i++){
-                    if (currentmarkers[i]['_id'] == id){
-                        currentmarker[i].otherdata = data;
+
+
+                for(var i = 0; i<data.length; i++){
+                    //getting the ID for the marker so we can update the otherdata field the marker has
+                    var info = data[i];
+                    var id = info['_id'];
+                
+                    //finding the marker the info was for in the database and updating 
+                    for(var j = 0; j<currentmarkers.length; j++){
+                        if (currentmarkers[j]['_id'] == id){
+                            currentmarker[j].otherdata = info;
                         
-                        //checking if the current marker is selected. if it is, calling the function to display its data in a pane
-                        if(currentmarkers[i].selected){
-                            openDisplayPane(currentmarkers[i]['_id']);                        
+                            //checking if the current marker is selected. if it is, calling the function to display its data in a pane
+                            if(currentmarkers[j] == selectedmarker){
+                                openDisplayPane(currentmarkers[j]['_id']);                        
+                            }
                         }
                     }
                 }
