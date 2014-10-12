@@ -51,7 +51,7 @@ def api_context(request):
     
     
 
-    return HttpResponse("<h1>Your context request was:</h1>" + q)
+    return HttpResponse("<h1>Your context request was:</h1>" + request.body)
 
 
 
