@@ -62,8 +62,8 @@
     </div>
     <div id='contents'></div>
     <script>
-        function markerClickCallback(){
-            console.log(m.getTitle());
+        function markerClickCallback(id){
+            console.log("id: "+id);
         }
 
         //some super-useful helper functions
@@ -81,8 +81,8 @@
             //the event listeners for clicking map items
             google.maps.event.addListener(m, "click", (function(ma){
                 return function(){
-                            console.log(ma);
-                            console.log(ma.getTitle());
+                            console.log("clicked item:"+ma.getTitle());
+                            
                         }
             })(m));
             m.id = id; //this is a total hax because javascript is interpreted, but it works.
