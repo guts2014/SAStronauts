@@ -35,7 +35,7 @@ def api_info2(idnumber):
     query = queries.info(id_num=idnumber, datalist=['_all'])
 
     for kw in query:
-        keywords.append(query[kw])
+        
         if kw.encode('utf-8') in items:
         
             if kw.encode('utf-8')=='group_name':
