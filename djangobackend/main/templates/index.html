@@ -149,7 +149,7 @@
                 data = jQuery.parseJSON(data);
                 
                 //iterating over the json objects and adding them to their appropriate markers
-                for(int i = 0; i<data.length; i++){
+                for(var i = 0; i<data.length; i++){
                     info = data[i];
                     console.log("info:"+info);
                     //getting the ID for the marker so we can update the otherdata field the marker has
