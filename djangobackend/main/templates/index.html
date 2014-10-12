@@ -75,8 +75,9 @@
         //takes a list of json objects and adds map markers for each one of them
         function addMarkersFromData(data){
             
-            for(var m in data){ //m is a json object with the data about the marker
-                console.log("stringify is: "+JSON.stringify(m));
+            for(var n in data){ //m is a json object with the data about the marker
+                m = data[n];
+                console.log("m is:"+m);
                 addmarker(m['id'], 10, 10, m);            
             }
         }
