@@ -64,10 +64,10 @@ def info(id_num="197000000000", datalist=["_all"],dbindex="terrorist",dbdoc="dat
 def findallnodesthatcontain(retdict,srchdict,dtlst=[],stacksize=0):
     newdict = retdict
     for key in srchdict.keys():
-        if type(srchdict[key]) is dict:
+        if (key in dtlst):
+            newdict[key] = srchdict[key]        
+        elif type(srchdict[key]) is dict:
             recursivedict = findallnodesthatcontain(retdict, srchdict[key],dtlst,stacksize+1)
             for things in recursivedict.keys():
                 newdict[things] = recursivedict[things]
-        elif (key in dtlst):
-            newdict[key] = srchdict[key]
     return newdict 
