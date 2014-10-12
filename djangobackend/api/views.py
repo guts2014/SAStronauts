@@ -2,6 +2,7 @@
 from django.http import HttpResponse
 import queries, json
 import wikiapi
+import unicodedata
 
 #This is a test view that returns the request to the server
 def api_test(request):
@@ -35,6 +36,8 @@ def api_info2(idnumber):
     query = queries.info(id_num=idnumber, datalist=items)
     
     query["group_name"] = query["group_name"][0]
+    for q in query:
+        query[q] = query[q].encode('utf-8')
 
     
         
@@ -44,11 +47,14 @@ def api_info2(idnumber):
 #this is a placeholder view for the context api call. This will return a json object with lots of good contextual data about the item requested.
 def api_context(request):
     q = request.GET.get('q', '')
-    #idno = request.GET.get('id', '')
-    #info = api_info2(idno)
-    #wikiapi.setupSearch(info)
+    idno = request.GET.get('id', '')
+    info = api_info2(idno)
+    wikiapi.setupSearch(info)
     return HttpResponse("<h1>Your context request was:</h1>" + q)
 
-
-
-
+def api_context2(request):
+    q = request.GET.get('q', '')
+    idno = request.GET.get('id', '')
+    info = api_info2(idno)
+    wikiapi.setupSearch(info)
+    return HttpResponse("<h1>Your context request was:</h1>" + q)
