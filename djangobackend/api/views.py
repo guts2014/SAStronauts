@@ -31,7 +31,7 @@ def api_info(request):
 
 def api_info2(idnumber):
     keywords=[]
-    items = [u'city',u'country',u'region',u'year',u'month',u'group_name']
+    items = ['city','country','region','year','month','group_name']
     query = queries.info(id_num=idnumber, datalist=['_all'])
 
     for kw in query:
@@ -40,7 +40,7 @@ def api_info2(idnumber):
         if kw in items:
             keywords.append(query[kw])
         '''
-            return ['sdaedwdedaddeewrwerwedwedewdewwrewr>>>>>>>>>>>']
+            
             if kw.encode('utf-8')=='group_name':
                 if kw.encode('utf-8')[0]!='Unknown':
                     keywords[kw.encode('utf-8')]=query[kw.encode('utf-8')][0]
