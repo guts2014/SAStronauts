@@ -82,6 +82,7 @@
 
         //All callback functions for get requests
         function SearchGetCallback(data){
+            data = jQuery.parseJSON(data)
             addMarkersFromData(data);      
         }
 
@@ -133,7 +134,6 @@
             });
 
         //the event listeners for clicking map items
-        addmarker(123, 30, 30, {data: "hi"})
         
         });
 </script>
