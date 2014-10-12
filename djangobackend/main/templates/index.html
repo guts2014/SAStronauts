@@ -103,7 +103,9 @@
                 var reldiff = maxrel - minrel;
                 var thiscorrectedrel = rel-minrel;
 
-                var r = 255 * (thiscorrectedrel/reldiff);
+                var division = (thiscorrectedrel/reldiff);
+                console.log("div:"+division);
+                var r = 255 * division;
                 var g = 255 - r
 
                 return r.toString(16)+g.toString(16)+"00"
