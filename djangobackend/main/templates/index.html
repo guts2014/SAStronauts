@@ -29,6 +29,7 @@
         //setting up the google map
         var map;
         var currentmarkers = [];
+        var selectedmarkerid = "";
         
         function initialize() {
             var mapCanvas = document.getElementById('map_canvas');
@@ -74,7 +75,6 @@
             var m = new google.maps.Marker({position: new google.maps.LatLng(lat, long), icon: pinImage});
             m.id = id; //this is a total hax because javascript is interpreted, but it works.
             m.otherdata = otherdata;
-            m.selected = false; //this determines whether the marker is the currently selected one we are displaying information about.
             
 
             currentmarkers.push(m);
@@ -145,33 +145,36 @@
 
         
         function infoRequestCallback(data){
+                //parsing the data string in to json objects. should get a list of json objects.
                 data = jQuery.parseJSON(data);
-                //getting the ID for the marker so we can update the otherdata field the marker has
-                var id = data['_id'];
-                //finding the marker the info was for in the database and updating 
-                for(var i = 0; i<currentmarkers.length; i++){
-                    if (currentmarkers[i]['_id'] == id){
-                        currentmarker[i].otherdata = data;
-                        
-                        //checking if the current marker is selected. if it is, calling the function to display its data in a pane
-                        if(currentmarkers[i].selected){
-                            openDisplayPane(currentmarkers[i]['_id']);                        
+                
+                //iterating over the json objects and adding them to their appropriate markers
+                for(int i = 0; i<data.length; i++){
+                    info = data[i];
+                    console.log("info:"+info);
+                    //getting the ID for the marker so we can update the otherdata field the marker has
+                    var id = info['_id'];
+
+                    //finding the marker the info was for in the database and updating 
+                    for(var j = 0; j<currentmarkers.length; j++){
+                        if (currentmarkers[j].id == id){ //if we have found the right marker, add the other data to it
+                            currentmarker[j].otherdata = info;
+                            
+                            //checking if the current marker is selected. if it is, calling the function to display its data in a pane
+                            if(currentmarkers[j].id == selectedmarkerid){
+                                openDisplayPane(currentmarkers[j]['_id']);                        
+                            }
                         }
                     }
-                }
         }
         
-        function constructJsonForInfoRequest(idslist, fieldslist){
-            var j = {'ids':idslist, 'fields':fieldslist};
-            console.log(j);
-            return j;
-        }
 
+        //this constructs a json object for info and posts it using ajax. the infoRequestCallback will be called when the info is retrieved
         function requestInfo(ids, fields){
             $.ajax({
               type: "POST",
               url: 'api/info/',
-              data: JSON.stringify(constructJsonForInfoRequest(ids, fields)),
+              data: JSON.stringify({'ids':idslist, 'fields':fieldslist}),
               success: infoRequestCallback,
               dataType: "application/json"
             });
@@ -234,8 +237,9 @@
             });
 
         //the event listeners for clicking map items
-        
-        });
+        GEvent.addListener(map, "click", function(marker, point){
+                    alert(marker);
+            });
 </script>
   </body>
 </html>
