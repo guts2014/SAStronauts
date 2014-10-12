@@ -21,14 +21,12 @@ def api_query(request):
 def api_info(request):
     data = json.loads(request.body)
 
-    jsonobjects = [] #the list of json objects
+    infodictionaries = {} #the list of json objects
     
     #iterating over the ids and getting the requested data on each
     for ids in data['ids']:
-        json.dumps(queries.info(id_num=ids, datalist=data['fields']))
-        
-        
-    return HttpResponse(data)#, content_type="application/json")
+        infodictionaries[ids] = append(queries.info(id_num=ids, datalist=data['fields']))
+    return HttpResponse(infodictionaries.dumps())#, content_type="application/json")
     
 
 #this is a placeholder view for the context api call. This will return a json object with lots of good contextual data about the item requested.

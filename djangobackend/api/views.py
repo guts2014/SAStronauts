@@ -25,7 +25,7 @@ def api_info(request):
     
     #iterating over the ids and getting the requested data on each
     for ids in data['ids']:
-        infodictionaries[ids] = append(queries.info(id_num=ids, datalist=data['fields']))
+        infodictionaries[ids] = queries.info(id_num=ids, datalist=data['fields'])
     return HttpResponse(infodictionaries.dumps())#, content_type="application/json")
     
 
