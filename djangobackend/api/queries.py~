@@ -52,7 +52,8 @@ def query(searchstring="",maxresults=20,dbindex="terrorist",):
             if (len(returninglist)==maxresults):
                 return returninglist
         return returninglist
-    
+
+#returns a dictionary of the fields requested for the specific event
 def info(id_num="197000000000", datalist=["_all"],dbindex="terrorist",dbdoc="data"):
     result = es.get(index=dbindex, doc_type=dbdoc, id=id_num)
     if not (datalist == ["_all"]):

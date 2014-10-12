@@ -23,7 +23,7 @@ def getsinglewordcase(field="_all",querystring=""):
             }
     }
 
-def query(searchstring="",maxresults=20,dbindex="terrorist",):
+def query(searchstring="",maxresults=50,dbindex="terrorist",):
     print("Start of the function")
     if (' ' in searchstring):
         querybody = getwhitespacecase(querystring=searchstring)
@@ -49,7 +49,7 @@ def query(searchstring="",maxresults=20,dbindex="terrorist",):
                             }
             print(returningdict)
             returninglist = [returningdict] + returninglist
-            if (len(returninglist)==maxresults):
+            if (len(returninglist)>=maxresults):
                 return returninglist
         return returninglist
 
