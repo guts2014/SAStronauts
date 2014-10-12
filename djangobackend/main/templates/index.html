@@ -109,9 +109,18 @@
                 console.log("div:"+division);
                 var r = 255 * division;
                 r = Math.round(r);
-                var g = 255 - r
+                var g = 255 - r;
 
-                return r.toString(16)+g.toString(16)+"00"
+                //making sure the strings are the right length
+                var rstr = r.toString(16);
+                if(rstr.length == 1){
+                    rstr = "0"+rstr;
+                }
+                var gstr = g.toString(16);
+                if(gstr.length == 1){
+                    gstr = "0"+gstr;
+                }
+                return rstr+gstr+"00"
             }
             
             
