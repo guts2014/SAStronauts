@@ -62,6 +62,7 @@
     </div>
     <div id='contents'></div>
     <script>
+        var m;
         function markerClickCallback(){
             console.log(m.getTitle());
         }
@@ -75,7 +76,7 @@
                 new google.maps.Point(0,0),
                 new google.maps.Point(10, 34));
 
-            var m = new google.maps.Marker({position: new google.maps.LatLng(lat, long), icon: pinImage});
+            m = new google.maps.Marker({position: new google.maps.LatLng(lat, long), icon: pinImage});
             m.setTitle(id);
 
             //the event listeners for clicking map items
