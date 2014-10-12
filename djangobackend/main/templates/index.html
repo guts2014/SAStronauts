@@ -124,6 +124,7 @@
 
         //removes all of the old markers from the map
         function removeOldMarkers(){
+            console.log("currentmarkers: " + currentmarkers);
             for(var i = 0; i < currentmarkers.length; i++){
                  currentmarkers[i].setMap(null);           
             }
