@@ -128,8 +128,8 @@ def setupSearch(ElasticSearchKeywords):
     percentages = getPercentages(scores)
     return percentages
 
-
-setupSearch({'Other1':'Military','Other2':'Army','Other3':'Police','Region':'Kokang','Year':'2009','Month':'September','Other5':'Shan State','Country':'Myanmar'})
+example = {'Other1':'Military','Other2':'Army','Other3':'Police','Region':'Kokang','Year':'2009','Month':'September','Other5':'Shan State','Country':'Myanmar'})
+}
 
 
 
