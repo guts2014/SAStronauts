@@ -96,15 +96,20 @@
         }
 
         
-        function displayData(){
+        function displayData(webdata){
             otherdata = getmarkerbyid(selectedmarker).otherdata;
+            otherdata = JSON.stringify(otherdata, null, 2);
             console.log(otherdata)
+            console.log(webdata)
+
+            finalstring = otherdata + "<br><br>" + webdata;
+            $('#sidepanel').innerHTML = finalstring;            
         }
 
         function contextGetCallback(data){
-            //var parsedata = jQuery.parseJSON(data)
-
-            displayData();
+            var parsedata = jQuery.parseJSON(data)
+            var str = JSON.stringify(parsedata, null, 2);
+            displayData(str);
             
         }
         
