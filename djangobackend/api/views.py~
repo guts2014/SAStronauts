@@ -36,11 +36,11 @@ def api_info2(idnumber):
 
     for kw in query:
         if kw in items:
-            if kw=='group_name':
-                if kw[0]!='Unknown':
-                    keywords[kw]=query[kw][0]
+            if kw.encode('utf-8')=='group_name':
+                if kw.encode('utf-8')[0]!='Unknown':
+                    keywords[kw.encode('utf-8')]=query[kw.encode('utf-8')][0]
             else:
-                keywords[kw] = query[kw]
+                keywords[kw.encode('utf-8')] = query[kw.encode('utf-8')]
                 
     return keywords
 
