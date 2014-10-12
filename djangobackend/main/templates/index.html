@@ -63,8 +63,7 @@
     <div id='contents'></div>
     <script>
         function markerClickCallback(){
-            //alert(marker.getTitle());
-            console.log(marker);
+            console.log(m.getTitle());
         }
 
         //some super-useful helper functions
@@ -80,10 +79,7 @@
             m.setTitle(id);
 
             //the event listeners for clicking map items
-            google.maps.event.addListener(m, "click", function(){
-                console.log(m);
-                console.log(m.getTitle());
-            });
+            google.maps.event.addListener(m, "click", markerClickCallback);
             m.id = id; //this is a total hax because javascript is interpreted, but it works.
             m.otherdata = otherdata;
             m.selected = false; //this determines whether the marker is the currently selected one we are displaying information about.
