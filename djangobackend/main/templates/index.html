@@ -80,7 +80,7 @@
 
             //the event listeners for clicking map items
             google.maps.event.addListener(m, "click", (function(m){
-                return function(m){
+                return function(){
                             console.log(m.getTitle());
                         }
             })(m));
