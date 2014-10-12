@@ -73,7 +73,7 @@
 
         //takes a list of json objects and adds map markers for each one of them
         function addMarkersFromData(data){
-            console.log("m coordinates: "+m.coordinates)
+            
             for(var m in data){ //m is a json object with the data about the marker
                 addmarker(m['id'], 10, 10, m);            
             }
@@ -82,6 +82,7 @@
         //All callback functions for get requests
         function SearchGetCallback(data){
             data = jQuery.parseJSON(data)
+            console.log(JSON.stringify(data))
             addMarkersFromData(data);      
         }
 
