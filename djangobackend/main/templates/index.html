@@ -111,8 +111,8 @@
             
         }
 
-        function makeSearchGetRequest(){
-            var pageaddress = "/api/query/?q=" + $("#search-query").val().replace(" ", "+");
+        function makeSearchGetRequest(querystring){
+            var pageaddress = "/api/query/?q=" + querystring.replace(" ", "+");
             console.log("requesting:", pageaddress)
             //using jquery for a get request
             $.get(
@@ -120,6 +120,23 @@
                 {},//empty parameters
                 SearchGetCallback                    
             );      
+        }
+
+        //removes all of the old markers from the map
+        function removeOldMarkers(){
+            alert("REMOVE OLD MARKERS!");
+        }
+        
+        function searchfunction(){
+            var querystring = $("#search-query").val();
+            //if we do not have a special character, remove the old markers
+            if !(querystring[0]=="¬"){ 
+                removeoldMarkers();
+            }else{
+                querystring.subString(1);
+            }
+            
+            makeSearchGetRequest(querystring);
         }
 
         $(document).ready(function() {
