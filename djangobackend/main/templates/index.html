@@ -108,6 +108,7 @@
                 var division = ((100*thiscorrectedrel)/(100*reldiff));
                 console.log("div:"+division);
                 var r = 255 * division;
+                r = Math.round(r);
                 var g = 255 - r
 
                 return r.toString(16)+g.toString(16)+"00"
