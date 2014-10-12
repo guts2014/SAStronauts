@@ -29,17 +29,30 @@ def api_info(request):
         infodictionaries[ids] = queries.info(id_num=ids, datalist=data['fields'])
     return HttpResponse(infodictionaries.dumps())#, content_type="application/json")
 
-def api_info(idnumber):
-        query = queries.info(id_num=idnumber, datalist=['_all'])
-        return query
+def api_info2(idnumber):
+    keywords={}
+    items = ['city','country','region','year','month','group_name']
+    query = queries.info(id_num=idnumber, datalist=['_all'])
+
+    for kw in query:
+        if kw in items:
+            if kw=='group_name':
+                if kw[0]!='Unknown':
+                    keywords[kw]=query[kw][0]
+            else:
+                keywords[kw] = query[kw]
+                
+    return keywords
 
 #this is a placeholder view for the context api call. This will return a json object with lots of good contextual data about the item requested.
 def api_context(request):
     q = request.GET.get('q', '')
     idno = request.GET.get('id', '')
     
-    info = api_info(idno)
+    info = api_info2(idno)
     print info
+    
+    
 
     return HttpResponse("<h1>Your context request was:</h1>" + q)
 
