@@ -175,10 +175,13 @@
                     //getting the ID for the marker so we can update the otherdata field the marker has
                     var info = data[i];
                     var id = info['_id'];
+                    console.log("info retrieved: ");
+                    console.log(info);
                 
                     //finding the marker the info was for in the database and updating 
                     for(var j = 0; j<currentmarkers.length; j++){
-                        if (currentmarkers[j]['_id'] == id){
+                        if (currentmarkers[j].id == id){
+                            console.log("switching "+currentmarkers[j].id+" to new info dict.");
                             currentmarker[j].otherdata = info;
                         
                             //checking if the current marker is selected. if it is, calling the function to display its data in a pane
