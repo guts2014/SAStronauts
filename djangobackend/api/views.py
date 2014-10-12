@@ -31,14 +31,14 @@ def api_info(request):
 
 def api_info(idnumber):
         query = queries.info(id_num=idnumber, datalist=data['_all'])
-        print query
+        return query
 
 #this is a placeholder view for the context api call. This will return a json object with lots of good contextual data about the item requested.
 def api_context(request):
     q = request.GET.get('q', '')
     idno = request.GET.get('id', '')
     
-    info = queries.info(id_num=ids, datalist=data['_all'])
+    info = api_info(idno)
     print info
 
     return HttpResponse("<h1>Your context request was:</h1>" + q)
