@@ -126,13 +126,10 @@
             console.log("max, min"+maxrel + "  " + minrel);
             //maps the relatedness on to a colour
             function getColour(rel){
-                console.log("rel: "+rel);
                 var reldiff = maxrel - minrel;
                 var thiscorrectedrel = rel-minrel;
-                console.log("reldiff:"+reldiff+"   corrected: "+thiscorrectedrel);
 
                 var division = ((100*thiscorrectedrel)/(100*reldiff));
-                console.log("div:"+division);
                 var r = 255 * division;
                 r = Math.round(r);
                 var g = 255 - r;
@@ -153,16 +150,13 @@
             for(var n in data){ //m is a json object with the data about the marker
                 m = data[n];
                 var scal = Number(m['_score']);
-                console.log("scal:"+scal);
                 var colour = getColour(scal);
-                console.log("colour should be:"+colour);
                 addmarker(m['_id'], Number(m['coordinates']['latitude']), Number(m['coordinates']['longitude']), m, colour);            
             }
         }
 
         //removes all of the old markers from the map
         function removeOldMarkers(){
-            console.log("currentmarkers: " + currentmarkers);
             for(var i = 0; i < currentmarkers.length; i++){
                  currentmarkers[i].setMap(null);           
             }
