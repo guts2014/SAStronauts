@@ -91,8 +91,8 @@
             selectedmarker = id;
             var mk = getmarkerbyid(selectedmarker);
             var searchterm = mk.query
-            
-            requestcontext(querystring);
+            console.log("ID is:"+id+"   Original query was: "+searchterm)
+            requestContext(query, id);
         }
 
         
