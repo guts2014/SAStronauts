@@ -34,7 +34,7 @@ def api_info2(idnumber):
     items = ['city','country','region','year','month','group_name']
     query = queries.info(id_num=idnumber, datalist=['_all'])
 
-    for kw in query:
+    for kw in query.keys():
         print 
         
         if kw in items:
