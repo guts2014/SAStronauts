@@ -233,8 +233,10 @@
 
             });
 
-        //the event listeners for clicking map items
-        
+            //the event listeners for clicking map items
+            GEvent.addListener(map, "click", function(marker){
+                alert(marker);
+            });
         });
 </script>
   </body>
