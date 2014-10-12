@@ -116,7 +116,7 @@
             
             for(var n in data){ //m is a json object with the data about the marker
                 m = data[n];
-                var scal = Number(m['_scale']);
+                var scal = Number(m['_score']);
                 console.log("scal:"+scal);
                 var colour = getColour(scal);
                 console.log("colour should be:"+colour);
