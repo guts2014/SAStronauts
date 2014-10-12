@@ -48,14 +48,17 @@ def api_info2(idnumber):
 #this is a placeholder view for the context api call. This will return a json object with lots of good contextual data about the item requested.
 def api_context(request):
     q = request.GET.get('q', '')
-    idno = request.GET.get('id', '')
-    info = api_info2(idno)
-    print wikiapi.setupSearch(info)
+    #idno = request.GET.get('id', '')
+    #info = api_info2(idno)
+    #print wikiapi.setupSearch(info)
     return HttpResponse("<h1>Your context request was:</h1>" + q)
 
 def api_context2(request):
     q = request.GET.get('q', '')
     idno = request.GET.get('id', '')
+
+    print q, idno
+
     info = api_info2(idno)
     wikiapi.setupSearch(info)
     return HttpResponse("<h1>Your context request was:</h1>" + q)
