@@ -141,16 +141,18 @@
     <script>
         //some super-useful helper functions
         function addmarker(id, lat, long, otherdata, colour){
-            var m = new google.maps.Marker({position: new google.maps.LatLng(lat, long)});
-            m.id = id; //this is a total hax because javascript is interpreted, but it works.
-            m.otherdata = otherdata;
-            m.selected = false; //this determines whether the marker is the currently selected one we are displaying information about.
             //adjusting the icon's colours
             var pinColor = "FE75FF";
             var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
                 new google.maps.Size(21, 34),
                 new google.maps.Point(0,0),
                 new google.maps.Point(10, 34));
+
+            var m = new google.maps.Marker({position: new google.maps.LatLng(lat, long), icon: pinImage});
+            m.id = id; //this is a total hax because javascript is interpreted, but it works.
+            m.otherdata = otherdata;
+            m.selected = false; //this determines whether the marker is the currently selected one we are displaying information about.
+            
 
             currentmarkers.push(m);
             m.setMap(map);
