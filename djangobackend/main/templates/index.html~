@@ -104,7 +104,7 @@
             console.log(webdata)
 
             finalstring = otherdata + "<br><br>" + webdata;
-            $('#sidepanel').innerHTML = finalstring;            
+            $('#sidepanel').html(finalstring);            
         }
 
         function contextGetCallback(data){

@@ -103,7 +103,7 @@
             console.log(otherdata)
             console.log(webdata)
 
-            finalstring = otherdata + "<br><br>" + webdata;
+            finalstring = otherdata.replace(",", "<br>") + "<br><br>" + webdata;
             $('#sidepanel').html(finalstring);            
         }
 
