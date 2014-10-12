@@ -129,6 +129,7 @@
         
         function searchfunction(){
             var querystring = $("#search-query").val();
+            console.log("query string:"+querystring);
             //if we do not have a special character, remove the old markers
             if (!(querystring[0]=="¬")){ 
                 removeoldMarkers();
