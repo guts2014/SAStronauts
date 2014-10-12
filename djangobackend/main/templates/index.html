@@ -69,7 +69,6 @@
             m.otherdata = otherdata;
 
             currentmarkers = currentmarkers + [m];
-            console.log("new current markers:"+currentmarkers);
             m.setMap(map);
         }
 
@@ -77,6 +76,7 @@
         function addMarkersFromData(data){
             
             for(var m in data){ //m is a json object with the data about the marker
+                console.log("id is: "+m['id']);
                 addmarker(m['id'], 10, 10, m);            
             }
         }
