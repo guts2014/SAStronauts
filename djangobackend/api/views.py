@@ -30,7 +30,7 @@ def api_info(request):
     return HttpResponse(infodictionaries.dumps())#, content_type="application/json")
 
 def api_info(idnumber):
-        query = queries.info(id_num=idnumber, datalist=data['_all'])
+        query = queries.info(id_num=idnumber, datalist=['_all'])
         return query
 
 #this is a placeholder view for the context api call. This will return a json object with lots of good contextual data about the item requested.
