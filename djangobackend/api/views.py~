@@ -30,17 +30,19 @@ def api_info(request):
     return HttpResponse(infodictionaries.dumps())#, content_type="application/json")
 
 def api_info2(idnumber):
-    keywords={}
+    keywords=[]
     items = ['city','country','region','year','month','group_name']
     query = queries.info(id_num=idnumber, datalist=['_all'])
 
     for kw in query:
-        if kw in items:
-            if kw.encode('utf-8')=='group_name':
-                if kw.encode('utf-8')[0]!='Unknown':
-                    keywords[kw.encode('utf-8')]=query[kw.encode('utf-8')][0]
-            else:
-                keywords[kw.encode('utf-8')] = query[kw.encode('utf-8')]
+        keywords.append(query[rw])
+        #if kw in items:
+        
+            #if kw.encode('utf-8')=='group_name':
+                #if kw.encode('utf-8')[0]!='Unknown':
+                    #keywords[kw.encode('utf-8')]=query[kw.encode('utf-8')][0]
+            #else:
+                #keywords[kw.encode('utf-8')] = query[kw.encode('utf-8')]
                 
     return keywords
 
