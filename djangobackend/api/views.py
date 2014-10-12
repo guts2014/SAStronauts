@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import queries, json
 import wikiapi
 import unicodedata
+import string
 
 #This is a test view that returns the request to the server
 def api_test(request):
@@ -37,7 +38,7 @@ def api_info2(idnumber):
     
     query["group_name"] = query["group_name"][0]
     for q in query:
-        query[q] = query[q].encode('utf-8')
+        query[q] = str(query[q])
 
     
         
