@@ -77,7 +77,7 @@
             
             for(var n in data){ //m is a json object with the data about the marker
                 m = data[n];
-                console.log("m is:"+m);
+                console.log("m is:"+m+"   m has id:"+m['id']);
                 addmarker(m['id'], 10, 10, m);            
             }
         }
