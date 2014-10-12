@@ -96,8 +96,15 @@
         }
 
         
+        function displayData(){
+            otherdata = getmarkerbyid(selectedmarker).otherdata;
+            console.log(otherdata)
+        }
+
         function contextGetCallback(data){
             var parsedata = jQuery.parseJSON(data)
+
+            displayData();
             
         }
         
