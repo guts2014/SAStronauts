@@ -139,7 +139,7 @@
             if (!(querystring[0]=="¬")){ 
                 removeOldMarkers();
             }else{
-                querystring.subString(1);
+                querystring.substring(1);
             }
             
             makeSearchGetRequest(querystring);
