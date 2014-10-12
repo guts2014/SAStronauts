@@ -30,7 +30,7 @@ def api_info(request):
     return HttpResponse(infodictionaries.dumps())#, content_type="application/json")
 
 def api_info2(idnumber):
-    keywords=[]
+    keywords={}
     items = ['city','country','region','year','month','group_name']
     query = queries.info(id_num=idnumber, datalist=['_all'])
 

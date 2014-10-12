@@ -36,13 +36,13 @@ def api_info2(idnumber):
 
     for kw in query:
         keywords.append(query[kw])
-        #if kw in items:
+        if kw.encode('utf-8') in items:
         
-            #if kw.encode('utf-8')=='group_name':
-                #if kw.encode('utf-8')[0]!='Unknown':
-                    #keywords[kw.encode('utf-8')]=query[kw.encode('utf-8')][0]
-            #else:
-                #keywords[kw.encode('utf-8')] = query[kw.encode('utf-8')]
+            if kw.encode('utf-8')=='group_name':
+                if kw.encode('utf-8')[0]!='Unknown':
+                    keywords[kw.encode('utf-8')]=query[kw.encode('utf-8')][0]
+            else:
+                keywords[kw.encode('utf-8')] = query[kw.encode('utf-8')]
                 
     return keywords
 
