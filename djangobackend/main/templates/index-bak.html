@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <style>
+        #sidepanel {
+            background-color: #f8f8f8;
+            display: block;
+            position: absolute;
+            height: 100%;
+            width: 400px;
+            top: 0px;
+            right: 0px;
+            
+        }
+        #searchdiv {
+            position: absolute;
+            top: 6px;
+            left: 45px;
+        }
+        #searchbox {
+            
+            width: 270px;
+            height: 30px;
+            font-size: 22px;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+        }
+        #map_canvas {
+          position: absolute;
+          top: 0px;
+          width: 99%;
+          bottom: 0px;
+        }
+    </style>
+    <script>
+        //setting up the google map
+        var map;
+        var currentmarkers = [];
+        var selectedmarker = "";
+        
+        function initialize() {
+            var mapCanvas = document.getElementById('map_canvas');
+            var mapOptions = {
+                center: new google.maps.LatLng(0, 0),
+                zoom: 3,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                zoomControl: false,
+                panControl: false,
+            }
+            map = new google.maps.Map(mapCanvas, mapOptions)
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+//an example on how to iterate through the json daa loading it in to html
+//var json = {'wikipedia': {'article': {'relevant_links': [{'url':'url1...'}, {'url': 'url2...'}]}}};
+
+//$('#contents').append('<ul>');
+//for (link in json['wikipedia'][article][relevant_links]) {
+//    $('#contents').append('<li>' + link[url] + '</li>');
+//}
+    
+    </script>
+  </head>
+  <body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <div id="map_canvas"></div>
+    <div id="searchdiv">
+        <input type="text" value="" placeholder="Search" id="search-query"></input>
+        <button type="button" id="search-button">Go</button>
+    </div>
+    <div id='sidepanel'></div>
+    <script>
+
+        function togglesidepanelvisibility(state){
+            var sidepanel = $('#sidepanel')
+            if(state){
+                sidepanel.style.display = "block";
+            }else{
+                sidepanel.style.display = "none";
+            }
+        }
+        function markerClickCallback(id){
+            console.log("id: "+id);
+            selectedmarker = id;
+            
+            requestInfo([id,], ["_all",]);
+        }
+
+        //some super-useful helper functions
+        function getmarkerbyid(id){
+            for(var i = 0; i < currentmarkers.length; i++){
+                if(currentmarkers[i].id == id){
+                    return currentmarkers[i];                
+                }
+            }
+            return null;
+        }
+
+        function addmarker(id, lat, long, otherdata, colour){
+            //adjusting the icon's colours
+            var pinColor = colour; //"0a75FF";
+            var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+                new google.maps.Size(21, 34),
+                new google.maps.Point(0,0),
+                new google.maps.Point(10, 34));
+
+            m = new google.maps.Marker({position: new google.maps.LatLng(lat, long), icon: pinImage});
+            m.setTitle(id);
+
+            //the event listeners for clicking map items
+            google.maps.event.addListener(m, "click", (function(ma){
+                return function(){
+                            console.log("clicked item:"+ma.getTitle());
+                            markerClickCallback(ma.getTitle());
+                        }
+            })(m));
+            m.id = id; //this is a total hax because javascript is interpreted, but it works.
+            m.otherdata = otherdata;
+            m.selected = false; //this determines whether the marker is the currently selected one we are displaying information about.
+            
+
+            currentmarkers.push(m);
+            m.setMap(map);
+        }
+
+        //takes a list of json objects and adds map markers for each one of them. It also colours markers by
+        function addMarkersFromData(data){
+            //finding the highest and lowest relevances in the markers so we know which colour to make the markers
+            var maxrel = 0;
+            var minrel = 1;            
+            for(var n in data){
+                var rel = Number(data[n]['_score']);
+                if(rel<minrel){
+                    minrel = rel;
+                }
+                if(rel>maxrel){
+                    maxrel = rel;                
+                }
+            }
+            
+
+            console.log("max, min"+maxrel + "  " + minrel);
+            //maps the relatedness on to a colour
+            function getColour(rel){
+                var reldiff = maxrel - minrel;
+                var thiscorrectedrel = rel-minrel;
+
+                var division = ((100*thiscorrectedrel)/(100*reldiff));
+                var r = 255 * division;
+                r = Math.round(r);
+                var g = 255 - r;
+
+                //making sure the strings are the right length
+                var rstr = r.toString(16);
+                if(rstr.length == 1){
+                    rstr = "0"+rstr;
+                }
+                var gstr = g.toString(16);
+                if(gstr.length == 1){
+                    gstr = "0"+gstr;
+                }
+                return rstr+gstr+"00"
+            }
+            
+            
+            for(var n in data){ //m is a json object with the data about the marker
+                m = data[n];
+                var scal = Number(m['_score']);
+                var colour = getColour(scal);
+                addmarker(m['_id'], Number(m['coordinates']['latitude']), Number(m['coordinates']['longitude']), m, colour);            
+            }
+        }
+
+        //removes all of the old markers from the map
+        function removeOldMarkers(){
+            for(var i = 0; i < currentmarkers.length; i++){
+                 currentmarkers[i].setMap(null);           
+            }
+            currentmarkers = [];
+        }
+
+
+        function openDisplayPane(id){
+            alert("Display pane! "+id);
+        }
+
+        
+        function infoRequestCallback(data){
+                console.log("data")
+                //parsing the json string in to a list of json objects
+                data = jQuery.parseJSON(data);
+                console.log("data");
+                console.log(data);
+
+                for(var i = 0; i<data.length; i++){
+                    //getting the ID for the marker so we can update the otherdata field the marker has
+                    var info = data[i];
+                    var id = info['_id'];
+                    console.log("info retrieved: ");
+                    console.log(info);
+                
+                    //finding the marker the info was for in the database and updating 
+                    for(var j = 0; j<currentmarkers.length; j++){
+                        if (currentmarkers[j].id == id){
+                            console.log("switching "+currentmarkers[j].id+" to new info dict.");
+                            currentmarker[j].otherdata = info;
+                        
+                            //checking if the current marker is selected. if it is, calling the function to display its data in a pane
+                            if(currentmarkers[j] == selectedmarker){
+                                openDisplayPane(currentmarkers[j]['_id']);                        
+                            }
+                        }
+                    }
+                }
+        }
+        
+        function constructJsonForInfoRequest(idslist, fieldslist){
+            var j = {'ids':idslist, 'fields':fieldslist};
+            console.log(j);
+            return j;
+        }
+
+        function requestInfo(ids, fields){
+            $.ajax({
+              type: "POST",
+              url: 'api/info/',
+              data: JSON.stringify({'ids':ids, 'fields':fields}),
+              success: infoRequestCallback,
+              dataType: "application/json"
+            });
+            
+        }
+
+        //All callback functions for get requests
+        function SearchGetCallback(data){
+            data = jQuery.parseJSON(data)
+
+            //filtering out results with no coordinates
+            var newdata = [];
+            for(var i = 0; i<data.length; i++){
+                if(data[i]['coordinates']['latitude']!=""){ //if the latitude coordinate is not empty, add it to the new data
+                    newdata.push(data[i]);
+                }            
+            }
+            addMarkersFromData(newdata);      
+        }
+
+        //makes a get request to the api. the api will call the searchGetCallback function
+        function makeSearchGetRequest(querystring){
+            var pageaddress = "/api/query/?q=" + querystring.replace(" ", "+");
+            console.log("requesting:", pageaddress)
+            //using jquery for a get request
+            $.get(
+                pageaddress,
+                {},//empty parameters
+                SearchGetCallback                    
+            );      
+        }
+        
+        //the function called when the enter button is pressed in the search box
+        function searchfunction(){
+            var querystring = $("#search-query").val();
+            console.log("query string:"+querystring);
+            //if we do not have a special character, remove the old markers
+            if (!(querystring[0]=="¬")){ 
+                removeOldMarkers();
+            }else{
+                querystring.substring(1);
+            }
+            
+            makeSearchGetRequest(querystring);
+        }
+
+        $(document).ready(function() {
+            //the event listeners for the search elements
+            $('#search-button').on('click', function() {
+                searchfunction();
+                
+            });
+
+            $(document).on('keydown', function(e) {
+                if (e.keyCode === 13) {
+                    searchfunction();
+                }
+
+            });
+
+        });
+</script>
+  </body>
+</html>
