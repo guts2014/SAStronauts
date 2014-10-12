@@ -77,6 +77,7 @@
                 new google.maps.Point(10, 34));
 
             var m = new google.maps.Marker({position: new google.maps.LatLng(lat, long), icon: pinImage});
+            m.setTitle(id);
             //the event listeners for clicking map items
             google.maps.event.addListener(m, "click", function(m){
                 console.log(m);
