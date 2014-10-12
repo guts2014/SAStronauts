@@ -1,6 +1,7 @@
 #from django.shortcuts import render
 from django.http import HttpResponse
 import queries, json
+import wikiapi
 
 #This is a test view that returns the request to the server
 def api_test(request):
@@ -33,7 +34,8 @@ def api_info(request):
 def api_context(request):
     q = request.GET.get('q', '')
     idno = request.GET.get('id', '')
-
+    
+    queries.info(id_num=ids, datalist=data['_all'])
 
     return HttpResponse("<h1>Your context request was:</h1>" + q)
 

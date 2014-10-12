@@ -129,7 +129,7 @@ def setupSearch(ElasticSearchKeywords):
     return percentages
 
 
-print setupSearch({'Other1':'Military','Other2':'Army','Other3':'Police','Region':'Kokang','Year':'2009','Month':'September','Other5':'Shan State','Country':'Myanmar'})
+setupSearch({'Other1':'Military','Other2':'Army','Other3':'Police','Region':'Kokang','Year':'2009','Month':'September','Other5':'Shan State','Country':'Myanmar'})
 
 
 
