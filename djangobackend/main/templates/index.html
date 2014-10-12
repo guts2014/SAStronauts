@@ -57,7 +57,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <div id="map_canvas"></div>
     <div id="searchdiv">
-        <input type="text" value="test" placeholder="Search" id="search-query"></input>
+        <input type="text" value="" placeholder="Search" id="search-query"></input>
         <button type="button" id="search-button">Go</button>
     </div>
     <div id='contents'></div>
@@ -143,21 +143,6 @@
             currentmarkers = [];
         }
 
-        //All callback functions for get requests
-        function SearchGetCallback(data){
-            data = jQuery.parseJSON(data)
-            console.log("The data is:\n"+data);
-
-            //filtering out results with no coordinates
-            var newdata = [];
-            for(var i = 0; i<data.length; i++){
-                if(data[i]['coordinates']['latitude']!=""){ //if the latitude coordinate is not empty, add it to the new data
-                    newdata.push(data[i]);
-                }            
-            }
-            addMarkersFromData(newdata);      
-        }
-
         
         function infoRequestCallback(data){
                 data = jQuery.parseJSON(data);
@@ -193,6 +178,22 @@
             
         }
 
+        //All callback functions for get requests
+        function SearchGetCallback(data){
+            data = jQuery.parseJSON(data)
+            console.log("The data is:\n"+data);
+
+            //filtering out results with no coordinates
+            var newdata = [];
+            for(var i = 0; i<data.length; i++){
+                if(data[i]['coordinates']['latitude']!=""){ //if the latitude coordinate is not empty, add it to the new data
+                    newdata.push(data[i]);
+                }            
+            }
+            addMarkersFromData(newdata);      
+        }
+
+        //makes a get request to the api. the api will call the searchGetCallback function
         function makeSearchGetRequest(querystring){
             var pageaddress = "/api/query/?q=" + querystring.replace(" ", "+");
             console.log("requesting:", pageaddress)
@@ -203,9 +204,8 @@
                 SearchGetCallback                    
             );      
         }
-
-
         
+        //the function called when the enter button is pressed in the search box
         function searchfunction(){
             var querystring = $("#search-query").val();
             console.log("query string:"+querystring);
