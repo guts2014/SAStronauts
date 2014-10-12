@@ -143,13 +143,13 @@
         $(document).ready(function() {
             //the event listeners for the search elements
             $('#search-button').on('click', function() {
-                makeSearchGetRequest();
+                searchfunction();
                 
             });
 
             $(document).on('keydown', function(e) {
                 if (e.keyCode === 13) {
-                    makeSearchGetRequest();
+                    searchfunction();
                 }
 
             });
